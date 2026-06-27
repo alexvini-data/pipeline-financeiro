@@ -1,0 +1,11 @@
+id,data,valor,tipo,comerciante,categoria,cidade,status
+1,2024-01-10,150.00,debito,Supermercado Extra,alimentacao,São Paulo,aprovado
+2,2024-01-10,2500.00,credito,Loja Apple,eletronicos,São Paulo,aprovado
+3,2024-01-11,89.90,debito,Farmácia Drogasil,saude,Campinas,aprovado
+4,2024-01-11,15000.00,credito,Transferência Internacional,,Rio de Janeiro,aprovado
+5,2024-01-12,45.00,debito,iFood,,São Paulo,aprovado
+6,2024-01-12,300.00,credito,Posto Shell,transporte,São Paulo,recusado
+7,2024-01-13,9999.99,debito,Saque ATM,,São Paulo,aprovado
+8,2024-01-13,120.00,debito,Netflix,entretenimento,São Paulo,aprovado
+9,2024-01-14,,debito,Uber,transporte,Campinas,aprovado
+10,2024-01-14,5500.00,credito,Loja Samsung,eletronicos,,aprovado
