@@ -6,7 +6,6 @@ from sqlalchemy import create_engine
 
 load_dotenv()
 
-
 def analisar() -> None:
     try:
         engine = create_engine(
@@ -25,32 +24,36 @@ def analisar() -> None:
                 GROUP BY categoria
                 ORDER BY volume_total DESC
             """,
-            "Transações suspeitas (valor acima de 5000)": """
+            "Transações suspeitas (internacional + horário incomum)": """
                 SELECT
                     id,
                     data,
                     valor,
-                    comerciante,
-                    status
-                FROM transacoes
-                WHERE valor > 5000
-                ORDER BY valor DESC
-            """,
-            "Transações recusadas": """
-                SELECT
-                    id,
-                    data,
-                    valor,
-                    comerciante,
-                    status
-                FROM transacoes
-                WHERE status = 'recusado'
-            """,
-            "Ranking de transações por valor dentro da categoria": """
-                SELECT
-                    id,
-                    comerciante,
+                    tipo,
                     categoria,
+                    internacional,
+                    horario_incomum,
+                    fraude
+                FROM transacoes
+                WHERE internacional = 'Yes'
+                    AND horario_incomum = 'Yes'
+                ORDER BY data DESC
+                LIMIT 50
+            """,
+            "Distribuição de fraudes por categoria": """
+                SELECT
+                    categoria,
+                    fraude,
+                    COUNT(*) AS total
+                FROM transacoes
+                GROUP BY categoria, fraude
+                ORDER BY total DESC
+            """,
+            "Ranking de valor por categoria": """
+                SELECT
+                    id,
+                    categoria,
+                    tipo,
                     valor,
                     RANK() OVER (
                         PARTITION BY categoria
@@ -58,6 +61,7 @@ def analisar() -> None:
                     ) AS ranking_na_categoria
                 FROM transacoes
                 ORDER BY categoria, ranking_na_categoria
+                LIMIT 20
             """,
             "Categoria com volume acima da média geral": """
                 WITH media_geral AS (
@@ -93,5 +97,5 @@ def analisar() -> None:
             logger.info(f"[ANÁLISE] '{titulo}' — {len(df)} registros retornados.")
         
     except Exception as e:
-        logger.error(f"[EcleaRRO] Falha na análise: {e}")
+        logger.error(f"[ERRO] Falha na análise: {e}")
         raise
