@@ -1,4 +1,5 @@
-import pandas as pd 
+import pandas as pd
+from logger import logger 
 
 def transformar(df: pd.DataFrame) -> pd.DataFrame:
     try:
@@ -12,11 +13,11 @@ def transformar(df: pd.DataFrame) -> pd.DataFrame:
         df["data"] = pd.to_datetime(df["data"])
         #Converte valor para float
         df["valor"] = df["valor"].astype(float)
-        print(f"[TRANFORMAÇÃO] {len(df)} registros após limpeza.")
+        logger.info(f"[TRANFORMAÇÃO] {len(df)} registros após limpeza.")
         return df
     except KeyError as e:
-        print(f"[ERRO] Coluna não encontrada: {e}")
+        logger.error(f"[ERRO] Coluna não encontrada: {e}")
         raise
     except Exception as e:
-        print(f"[ERRO] Falha ma transformação: {e}")
+        logger.error(f"[ERRO] Falha ma transformação: {e}")
         raise

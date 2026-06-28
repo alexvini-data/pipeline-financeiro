@@ -1,13 +1,14 @@
 import pandas as pd
+from logger import logger
 
 def extrair(caminho: str) -> pd.DataFrame:
     try:
         df = pd.read_csv(caminho)
-        print(f"[EXTRAÇÃO] {len(df)} registros extraídos.")
+        logger.info(f"[EXTRAÇÃO] {len(df)} registros extraídos.")
         return df
     except FileNotFoundError:
-        print(f"[ERRO] Arquivo não encontrado {caminho}")
+        logger.error(f"[ERRO] Arquivo não encontrado {caminho}")
         raise
     except Exception as e:
-        print(f"[ERRO] Falha na extração: `{e}")
+        logger.error(f"[ERRO] Falha na extração: `{e}")
         raise

@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+from logger import logger
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
@@ -85,11 +86,12 @@ def analisar() -> None:
         
         for titulo, sql in consultas.items():
             print(f"\n{'='*50}")
-            print(f"    {titulo.upper()}")
+            print(f"  {titulo.upper()}")
             print(f"{'='*50}")
             df = pd.read_sql(sql, con=engine)
             print(df.to_string(index=False))
+            logger.info(f"[ANÁLISE] '{titulo}' — {len(df)} registros retornados.")
         
     except Exception as e:
-        print(f"[ERRO] Falha na análise: {e}")
+        logger.error(f"[EcleaRRO] Falha na análise: {e}")
         raise

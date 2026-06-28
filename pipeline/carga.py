@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+from logger import logger
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 
@@ -12,7 +13,7 @@ def carregar(df: pd.DataFrame) -> None:
             f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NOME')}"
         )
         df.to_sql("transacoes", con=engine, if_exists="replace", index=False)
-        print(f"[CARGA] {len(df)} registros salvos no banco.")
+        logger.info(f"[CARGA] {len(df)} registros salvos no banco.")
     except Exception as e:
-        print(f"ERRO Falha na carga: {e}")
+        logger.error(f"ERRO Falha na carga: {e}")
         raise
