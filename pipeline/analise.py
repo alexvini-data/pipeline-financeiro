@@ -44,6 +44,42 @@ def analisar() -> None:
                     status
                 FROM transacoes
                 WHERE status = 'recusado'
+            """,
+            "Ranking de transações por valor dentro da categoria": """
+                SELECT
+                    id,
+                    comerciante,
+                    categoria,
+                    valor,
+                    RANK() OVER (
+                        PARTITION BY categoria
+                        ORDER BY valor DESC
+                    ) AS ranking_na_categoria
+                FROM transacoes
+                ORDER BY categoria, ranking_na_categoria
+            """,
+            "Categoria com volume acima da média geral": """
+                WITH media_geral AS (
+                    SELECT AVG(valor) AS media
+                    FROM transacoes
+                ),
+                volume_por_categoria AS (
+                    SELECT
+                        categoria,
+                        ROUND(SUM(valor)::numeric, 2) AS volume_total,
+                        ROUND(AVG(valor)::numeric, 2) AS ticket_medio
+                    FROM transacoes
+                    GROUP BY categoria
+                )
+                SELECT
+                    v.categoria,
+                    v.volume_total,
+                    v.ticket_medio,
+                    ROUND(m.media::numeric, 2) AS media_geral
+                FROM volume_por_categoria v
+                CROSS JOIN media_geral m
+                WHERE v.ticket_medio > m.media
+                ORDER BY v.volume_total DESC
             """
         }
         
