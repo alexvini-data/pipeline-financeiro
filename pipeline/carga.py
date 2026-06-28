@@ -1,9 +1,14 @@
-from sqlalchemy import create_engine
 import pandas as pd
+import os
+from sqlalchemy import create_engine
+from dotenv import load_dotenv
 
-def carregar(df: pd.DataFrame, senha: str) -> None:
+load_dotenv()
+
+def carregar(df: pd.DataFrame) -> None:
     engine = create_engine(
-        f"postgresql://postgres:{senha}@localhost:5432/pipeline_financeiro"
+        f"postgresql://{os.getenv('DB_USUARIO')}:{os.getenv('DB_SENHA')}"
+        f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NOME')}"
     )
     df.to_sql("transacoes", con=engine, if_exists="replace", index=False)
     print(f"[CARGA] {len(df)} registros salvos no banco.")
