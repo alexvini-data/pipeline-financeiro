@@ -6,12 +6,12 @@ def transformar(df: pd.DataFrame) -> pd.DataFrame:
     try:
         colunas = [
             "Transaction_ID",
-            "Costumer_ID",
+            "Customer_ID",
             "Transaction_Amount (in Million)",
             "Transaction_Date",
             "Transaction_Type",
             "Merchant_Category",
-            "Is_Internacional_Transaction",
+            "Is_International_Transaction",
             "Unusual_Time_Transaction",
             "Fraud_Label"
         ]
@@ -19,12 +19,12 @@ def transformar(df: pd.DataFrame) -> pd.DataFrame:
 
         df = df.rename(columns={
             "Transaction_ID":                  "id",
-            "Costumer_ID":                     "cliente_id",
+            "Custumer_ID":                     "cliente_id",
             "Transaction_Amount (in Million)": "valor",
             "Transaction_Date":                "data",
             "Transaction_Type":                "tipo",
             "Merchant_Category":               "categoria",
-            "Is_Internacional_Transaction":    "internacional",
+            "Is_International_Transaction":    "internacional",
             "Unusual_Time_Transaction":        "horario_incomum",
             "Fraud_Label":                     "fraude"
         })

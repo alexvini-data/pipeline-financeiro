@@ -5,12 +5,12 @@ from pipeline.transformacao import transformar
 def criar_df_teste():
     return pd.DataFrame({
         "Transaction_ID":                  [1.0, 2.0, 3.0, 4.0],
-        "Costumer_ID":                     [10.0, 20.0, 30.0, 40.0],
+        "Customer_ID":                     [10.0, 20.0, 30.0, 40.0],
         "Transaction_Amount (in Million)": [5.0, None, 3.0, 7.0],
         "Transaction_Date":                ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
         "Transaction_Type":                ["Online", "POS", "ATM", "Online"],
         "Merchant_Category":               ["Fuel", "Normal", None, "ATM"],
-        "Is_Internacional_Transaction":    ["Yes", "No", None, "Yes"],
+        "Is_International_Transaction":    ["Yes", "No", None, "Yes"],
         "Unusual_Time_Transaction":        ["No", "Yes", "No", None],
         "Fraud_Label":                     ["Normal", "Fraud", None, "Normal"]
     })
